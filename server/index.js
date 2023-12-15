@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin:"http://localhost:5173"
+  origin:["http://localhost:5173","https://expense-tracker-front-end-phi.vercel.app"]
 }))
 
 // Declare the port
