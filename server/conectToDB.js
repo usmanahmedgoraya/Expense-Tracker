@@ -3,13 +3,9 @@ const mongoose = require('mongoose')
 // * This is the mongodb Atlas connection link
 const dbConnect = process.env.MONGO_URI;
 
-// * Theses are the parameters
-const connectionParams = {
-    useNewUrlParser: true, useUnifiedTopology: true,
-};
 
 // * This is the mongodb Atlas connection
-mongoose.connect(dbConnect, connectionParams).then(() => {
+mongoose.connect(dbConnect).then(() => {
 
     console.log('Hurrah! MongoDB connection successfully established :)');
 

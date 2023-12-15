@@ -5,7 +5,7 @@ const DarkModeToggle = ({ darkMode, handleDarkMode }) => {
         <>
             <div className="px-6 py-4 w-full flex justify-center sm:justify-start">
 
-                <input checked={darkMode} id="checkbox" type="checkbox" onClick={handleDarkMode} />
+                <input checked={darkMode} id="checkbox" type="checkbox" onChange={handleDarkMode} />
                 <label className="switch" htmlFor="checkbox">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="slider">
                         <path

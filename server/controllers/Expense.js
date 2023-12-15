@@ -2,7 +2,7 @@ const Expense = require('../Model/Expense')
 // Creating Transaction
 const AddTransaction = async (req, res) => {
     try {
-        const { text, amount } = req.body;
+        const { type, text, amount } = req.body;
         if (text === '' || amount.length === 0) {
             return res.status(400).json({
                 success: false,
@@ -18,7 +18,7 @@ const AddTransaction = async (req, res) => {
         }
 
         const transaction = await Expense.create({
-            text, amount
+            type, text, amount
         })
 
         res.status(200).json({
@@ -60,7 +60,7 @@ const DeleteTransaction = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            id:id,
+            id: id,
             msg: "Delete Transaction Successfully"
         })
     } catch (error) {
