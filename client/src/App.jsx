@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import AddTransaction from "./components/AddTransaction"
 import Balance from "./components/Balance"
 import IncomeExpensive from "./components/IncomeExpensive"
-import Header from "./components/header"
+import Header from "./components/Header"
 import { GlobalProvider } from "./context/GlobalContext"
 import DarkModeToggle from "./components/DarkModeToggle"
 
