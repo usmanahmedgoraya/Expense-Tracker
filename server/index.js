@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   next();
 });
 // Test API Endpoint
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
