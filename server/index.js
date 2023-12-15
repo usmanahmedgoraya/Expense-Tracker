@@ -33,5 +33,4 @@ app.use("/api",require('./Routes/Expense'))
 // Listening the app
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-  connectToDB(process.env.MONGO_URI)
 })

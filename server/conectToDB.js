@@ -9,17 +9,12 @@ const connectionParams = {
 };
 
 // * This is the mongodb Atlas connection
-const connectToDB = () => {
-    mongoose.connect(dbConnect, connectionParams).then(() => {
+mongoose.connect(dbConnect, connectionParams).then(() => {
 
-        console.log('Hurrah! MongoDB connection successfully established :)');
+    console.log('Hurrah! MongoDB connection successfully established :)');
 
-    }).catch((err) => {
+}).catch((err) => {
 
-        console.log('Sorry Bro! MongoDB is not connected :(', err);
+    console.log('Sorry Bro! MongoDB is not connected :(', err);
 
-    })
-}
-
-
-module.exports = connectToDB
+})
