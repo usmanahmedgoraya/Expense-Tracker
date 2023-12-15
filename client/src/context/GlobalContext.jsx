@@ -21,7 +21,7 @@ export const GlobalProvider = ({ children }) => {
   const fetchTransactions = async () => {
     try {
       setLoading(true)
-      const res = await fetch('http://localhost:3000/api/get-all-transactions', {
+      const res = await fetch('https://expense-tracker-jet-phi.vercel.app/api/get-all-transactions', {
         method: 'GET'
       })
       const data = await res.json();

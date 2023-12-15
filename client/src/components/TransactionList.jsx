@@ -55,7 +55,7 @@ const TransactionList = () => {
                 theme="light"
                 key="toast-container"
             />
-            <div className="space-y-3">
+            <div className="space-y-3 my-4">
                 {transactions.length > 0 ? (transactions.map((transaction) => {
                     return (
                         <div key={transaction._id} className={`flex justify-between items-center cursor-pointer relative bg-white dark:bg-slate-700 py-3 px-3 rounded-md group  ${transaction.amount < 0 ? "border-r-4 border-red-700 dark:border-red-500" : "border-r-4 border-green-700"}`}>

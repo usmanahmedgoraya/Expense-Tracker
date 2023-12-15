@@ -5,7 +5,7 @@
 // Delete Transaction Function
 const deleteTrans = async(id) =>{
     try {     
-        const res = await fetch(`http://localhost:3000/api/delete-transaction/${id}`,{
+        const res = await fetch(`https://expense-tracker-jet-phi.vercel.app/api/delete-transaction/${id}`,{
             method:"delete"
         })
     
@@ -17,7 +17,7 @@ const deleteTrans = async(id) =>{
 }
 // Add Transaction Function
 const AddTrans = async(transaction) =>{
-    const res = await fetch(`http://localhost:3000/api/add-transaction`,{
+    const res = await fetch(`https://expense-tracker-jet-phi.vercel.app/api/add-transaction`,{
         method:"post",
         headers:{
             "Content-Type":"application/json"
