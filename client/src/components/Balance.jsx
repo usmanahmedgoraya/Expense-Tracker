@@ -20,25 +20,26 @@ function moneyFormatter(num) {
 const Balance = () => {
     const { transactions } = useContext(GlobalContext);
 
-  const amounts = transactions.map(transaction => transaction.amount);
+  // const transactionTypes = transactions.map(transaction => transaction.type);
   const expense = (
-    amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0)*-1
+    transactions.filter(item => item.type === "Expense").reduce((acc, item) => (acc += item.amount), 0)
   );
   const Income = (
-    amounts.filter(item => item > 0).reduce((acc, item) => (acc += item), 0)
+    transactions.filter(item => item.type === "Income").reduce((acc, item) => (acc += item.amount), 0)
   );
   
 
     return (
-        <div className="flex justify-between dark:bg-slate-700 items-center px-6 rounded-lg py-4 bg-white shadow-xl">
-            <div className="text-2xl font-semibold space-y-0.5">
-                <h1>Expense</h1>
-                <p className="text-red-700 dark:text-red-500">{moneyFormatter(expense)}</p>
+        <div className="flex flex-col sm:flex-row justify-start sm:justify-between dark:bg-slate-700 items-center sm:gap-2 gap-0  sm:px-4 px-2 rounded-lg py-4 bg-[#6740ea] shadow-xl text-white">
+            <div className="text-2xl sm:flex-col flex-row flex justify-between items-center  font-semibold space-y-0.5">
+                <h1 className="mx-2">Expense</h1>
+                <p className="text-red-400 dark:text-red-500">{moneyFormatter(expense)}</p>
             </div>
-            <div className="bg-gray-500 w-0.5 h-12 rounded-md"></div>
-            <div className="text-2xl font-semibold space-y-0.5">
+            <div className="bg-gray-200 w-0.5 h-12 mx-3 hidden sm:block rounded-md"></div>
+            <div className="bg-gray-200 h-0.5 w-[12rem] rounded-md sm:hidden my-4"></div>
+            <div className="text-2xl sm:flex-col flex-row flex justify-between items-center  font-semibold space-y-0.5">
                 <h1>Income</h1>
-                <p className="text-green-700 dark:text-green-500">{moneyFormatter(Income)}</p>
+                <p className="text-green-400 dark:text-green-500">{moneyFormatter(Income)}</p>
             </div>
         </div>
     )

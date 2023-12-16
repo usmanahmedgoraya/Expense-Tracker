@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
 import AddTransaction from "./components/AddTransaction"
-import Balance from "./components/Balance"
+import HoverCard from "./components/Cards/HoverCard"
 import IncomeExpensive from "./components/IncomeExpensive"
-import Header from "./components/Header"
 import { GlobalProvider } from "./context/GlobalContext"
-import DarkModeToggle from "./components/DarkModeToggle"
 
 const App = () => {
   const [darkMode, setdarkMode] = useState(false)
@@ -48,14 +46,13 @@ const App = () => {
   return (
     <div className="bg-slate-200 min-h-screen dark:bg-slate-900 dark:text-white">
       {/* Dark_Mode Toggle */}
-      <DarkModeToggle handleDarkMode={handleDarkMode} darkMode={darkMode} />
-
       <GlobalProvider>
-        <div className="w-full h-auto flex justify-center items-center flex-col ">
-          <div className="container max-w-[16rem] sm:max-w-[20rem]">
-            <Header />
-            <Balance />
-            <AddTransaction />
+        <div className="w-full py-7 h-auto flex justify-center items-center flex-col ">
+          <HoverCard handleDarkMode={handleDarkMode} darkMode={darkMode} />
+          <AddTransaction />
+        </div>
+        <div className="w-full flex items-center justify-center">
+          <div className="container sm:max-w-xs max-w-[16rem]">
             <IncomeExpensive />
           </div>
         </div>

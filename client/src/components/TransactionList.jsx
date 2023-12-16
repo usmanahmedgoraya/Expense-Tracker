@@ -9,11 +9,17 @@ const TransactionList = () => {
     const { transactions, deleteTransaction } = useContext(GlobalContext);
     const [loading, setLoading] = useState(false)
 
+
+
+    // Delete Transaction Function
     const handleDeleteFunction = async (id) => {
         try {
-            setLoading(true)
-            deleteTransaction(id);
-            setLoading(false)
+            if (loading) {
+                return; // If already in the process of deleting, do nothing
+            }
+            
+            setLoading(true);
+            await deleteTransaction(id);
             toast.success("Transaction Successfully Deleted", {
                 position: "top-right",
                 autoClose: 1300,
@@ -24,6 +30,7 @@ const TransactionList = () => {
                 progress: undefined,
                 theme: "dark",
             });
+            setLoading(false)
         } catch (error) {
             setLoading(false)
             toast.error("Transaction Deleted Failed", {
@@ -58,14 +65,14 @@ const TransactionList = () => {
             <div className="space-y-3 my-4">
                 {transactions.length > 0 ? (transactions.map((transaction) => {
                     return (
-                        <div key={transaction._id} className={`flex justify-between items-center cursor-pointer relative bg-white dark:bg-slate-700 py-3 px-3 rounded-md group  ${transaction.amount < 0 ? "border-r-4 border-red-700 dark:border-red-500" : "border-r-4 border-green-700"}`}>
+                        <div key={transaction._id} className={`flex justify-between items-center cursor-pointer relative bg-white dark:bg-slate-700 py-3 px-3 rounded-md group  ${transaction.type === "Expense" ? "border-r-4 border-red-700 dark:border-red-500" : "border-r-4 border-green-700"} shadow-xl`}>
                             <div className='flex items-center gap-4 transition-all duration-200'>
                                 <button className=' text-xl hidden transition-all duration-300  text-red-600 dark:text-red-500 relative active:animate-ping left-[0%] group-hover:inline group-hover:animate-pulse' disabled={loading} onClick={() => handleDeleteFunction(transaction._id)}>
                                     <MdOutlineDeleteSweep />
                                 </button>
                                 <h1 className="text-lg font-semibold select-none">{transaction.text}</h1>
                             </div>
-                            <p className={`text-lg text-green-600 font-bold select-none ${transaction.amount < 0 ? "dark:text-red-500 text-red-700" : " text-green-700 dark:text-green-500"}`}>{transaction.amount}$</p>
+                            <p className={`text-lg text-green-600 font-bold select-none ${transaction.type === "Expense" ? "dark:text-red-500 text-red-700" : " text-green-700 dark:text-green-500"}`}>{transaction.amount}$</p>
 
                         </div>
 

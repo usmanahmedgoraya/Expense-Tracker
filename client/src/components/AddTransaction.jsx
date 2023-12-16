@@ -7,22 +7,25 @@ import { GlobalContext } from "../context/GlobalContext";
 import { CiBookmarkPlus, CiCirclePlus } from "react-icons/ci";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dropdown from "./Dropdown";
 
 const AddTransaction = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <>
+        <div className="flex justify-center">
             <button
                 onClick={() => setIsOpen(true)}
-                className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-medium px-4 py-2 rounded hover:opacity-90 transition-opacity my-3 mt-8 flex items-center"
+                className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-medium px-4 py-2 rounded hover:opacity-90 transition-opacity my-3 mt-8 flex items-center shadow-xl"
             >
                 <CiBookmarkPlus className="mx-2 text-xl" /> Add Transaction
             </button>
             <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />
-        </>
+        </div>
     );
 };
+
+
 
 const SpringModal = ({ isOpen, setIsOpen }) => {
     const [text, setText] = useState()
@@ -31,6 +34,7 @@ const SpringModal = ({ isOpen, setIsOpen }) => {
     const textRef = useRef(null)
     const amountRef = useRef(null)
     const [loading, setLoading] = useState(false)
+    const [type, setType] = useState("")
 
     const handleChangeInput = (e) => {
         e.preventDefault();
@@ -45,19 +49,34 @@ const SpringModal = ({ isOpen, setIsOpen }) => {
     }
 
 
-    const handleAddBtn = () => {
-        if (text === "" || amount === "") {
-            toast.error("Please add some data in Input", {
-                position: "top-right",
-                autoClose: 1300,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-            return;
+    const handleAddBtn = async () => {
+        if (text === "" || amount === 0 || type === "") {
+            if (type === "") {
+                toast.error("Please Set the Transaction Type", {
+                    position: "top-right",
+                    autoClose: 1300,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                return;
+            }
+            else {
+                toast.error("Please fill all Inputs", {
+                    position: "top-right",
+                    autoClose: 1300,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                return;
+            }
         }
 
         const parsedAmount = parseFloat(amount);
@@ -77,13 +96,15 @@ const SpringModal = ({ isOpen, setIsOpen }) => {
         }
 
         const newTransaction = {
+            type: type,
             text,
             amount: parsedAmount,
         };
         setLoading(true);
-        addTransaction(newTransaction);
-        setIsOpen(false);
+        await addTransaction(newTransaction);
         setLoading(false)
+        setType("")
+        setIsOpen(false);
         toast.success("Transaction Successfully Added", {
             position: "top-right",
             autoClose: 1300,
@@ -134,18 +155,19 @@ const SpringModal = ({ isOpen, setIsOpen }) => {
                                 Add Transaction
                             </div>
                             <div>
+                                <Dropdown type={type} setType={setType} />
                                 <div className="mb-5">
-                                    <label htmlFor="transaction" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tranaction</label>
+                                    <label htmlFor="transaction" className="block mb-2 text-sm font-bold text-white dark:text-white">Tranaction</label>
                                     <input type="text" id="transaction" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. Flower" onChange={handleChangeInput} ref={amountRef} required />
                                 </div>
                                 <div className="mb-5">
-                                    <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
+                                    <label htmlFor="amount" className="block mb-2 text-sm font-bold text-white  dark:text-white">Amount</label>
                                     <input type="text" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. $ 20" onChange={handleChangeInput} ref={textRef} required />
                                 </div>
                             </div>
                             <div className="flex gap-2">
                                 <button
-                                    onClick={() => { setIsOpen(false); }}
+                                    onClick={() => { setType("");setIsOpen(false); }}
                                     className="bg-transparent hover:bg-white/10 transition-colors text-white font-semibold w-full py-2 rounded"
                                 >
                                     Nah, go back
